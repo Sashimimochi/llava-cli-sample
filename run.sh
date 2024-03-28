@@ -33,9 +33,9 @@ function download_model() {
     fi
 }
 
-INPUT_TEXT='画像の少女の様子を詳細に説明してください。具体的には服装、体型、年齢、髪型など彼女の人物像に関する情報を列挙してください。回答は日本語にしてください。'
+INPUT_TEXT='この画像を詳細に説明してください。回答は日本語にしてください。'
 IMAGE_DIR="data"
-IMAGE="sample.png"
+IMAGE="sample.jpg"
 LLAVA_MODEL="ggml-model-q4_k.gguf"
 CLIP_MODEL="mmproj-model-f16.gguf"
 
@@ -44,6 +44,7 @@ build_docker_image
 
 download_model $LLAVA_MODEL
 download_model $CLIP_MODEL
+wget -O $IMAGE --no-clobber https://huggingface.co/rinna/bilingual-gpt-neox-4b-minigpt4/resolve/main/sample.jpg
 mkdir -p llama.cpp/$IMAGE_DIR/
 cp $IMAGE llama.cpp/$IMAGE_DIR/
 
