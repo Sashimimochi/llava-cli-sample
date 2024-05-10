@@ -44,9 +44,15 @@ build_docker_image
 
 download_model $LLAVA_MODEL
 download_model $CLIP_MODEL
-wget -O $IMAGE --no-clobber https://huggingface.co/rinna/bilingual-gpt-neox-4b-minigpt4/resolve/main/sample.jpg
-mkdir -p llama.cpp/$IMAGE_DIR/
-cp $IMAGE llama.cpp/$IMAGE_DIR/
+
+if [ ! -f "llama.cpp/$IMAGE_DIR/$IMAGE" ]; then
+    echo "https://huggingface.co/rinna/bilingual-gpt-neox-4b-minigpt4/resolve/main/sample.jpg から入力画像をダウンロードします。"
+    wget -O $IMAGE --no-clobber https://huggingface.co/rinna/bilingual-gpt-neox-4b-minigpt4/resolve/main/sample.jpg
+    mkdir -p llama.cpp/$IMAGE_DIR/
+    cp $IMAGE llama.cpp/$IMAGE_DIR/
+else
+    echo "すでにローカルに$IMAGEの画像ファイルがありますので、ダウンロードはスキップします。"
+fi
 
 echo "START"
 echo_time
